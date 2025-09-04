@@ -165,6 +165,11 @@
                 class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600"
                 >Benefits</a
               >
+              <a
+                href="#api-docs"
+                class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600"
+                >API Docs</a
+              >
             </div>
           </div>
         </div>
@@ -698,6 +703,514 @@
               or attempting to derive our proprietary methods. All feedback and
               suggestions become the property of DepoGenius.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="api-docs" class="py-16 sm:py-24">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold tracking-tight section-title">
+              Developer Documentation
+            </h2>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-600">
+              Complete technical documentation for integrating with the
+              Clarisearch™ API. Follow these step-by-step instructions to start
+              processing documents and generating Evidence Packets
+              programmatically.
+            </p>
+          </div>
+
+          <!-- Getting Started -->
+          <div class="max-w-5xl mx-auto mb-16">
+            <h3 class="text-2xl font-bold section-title mb-6">
+              Getting Started
+            </h3>
+
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                1. Obtain Your API Key
+              </h4>
+              <p class="text-slate-600 mb-4">
+                To use the Clarisearch™ API, you'll need an API key. Contact our
+                team to get your unique API key, which will have the format
+                <code class="bg-slate-100 px-2 py-1 rounded">csk_xxxxxxxxx</code
+                >.
+              </p>
+              <p
+                class="text-sm text-slate-500 bg-yellow-50 border border-yellow-200 rounded p-3"
+              >
+                <strong>Security Note:</strong> Store your API key securely and
+                never expose it in client-side code. All API requests must be
+                made from your server environment.
+              </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                2. Base URL
+              </h4>
+              <p class="text-slate-600 mb-2">
+                All API requests should be made to:
+              </p>
+              <div class="code-block">
+                https://us-central1-depogenius.cloudfunctions.net/clarisearch-
+              </div>
+              <p class="text-sm text-slate-500 mt-2">
+                Replace the endpoint suffix (e.g., <code>submitJob</code>,
+                <code>getJobStatus</code>) based on the specific operation
+                you're performing.
+              </p>
+            </div>
+          </div>
+
+          <!-- Authentication -->
+          <div class="max-w-5xl mx-auto mb-16">
+            <h3 class="text-2xl font-bold section-title mb-6">
+              Authentication
+            </h3>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <p class="text-slate-600 mb-4">
+                All API requests require authentication using your API key in
+                the Authorization header:
+              </p>
+              <div class="code-block">
+                Authorization: Bearer csk_your_api_key_here
+              </div>
+
+              <div class="mt-6 grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-semibold text-slate-800 mb-2">
+                    ✅ Correct Format
+                  </h5>
+                  <div class="code-block text-sm">
+                    curl -H "Authorization: Bearer csk_abc123def456" \
+                    https://us-central1-depogenius.cloudfunctions.net/clarisearch-submitJob
+                  </div>
+                </div>
+                <div>
+                  <h5 class="font-semibold text-slate-800 mb-2">
+                    ❌ Incorrect Formats
+                  </h5>
+                  <div class="code-block text-sm">
+                    # Missing "Bearer" Authorization: csk_abc123def456 # Wrong
+                    prefix Authorization: Bearer api_abc123def456
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- API Endpoints -->
+          <div class="max-w-5xl mx-auto mb-16">
+            <h3 class="text-2xl font-bold section-title mb-6">API Endpoints</h3>
+
+            <!-- Submit Job Endpoint -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <div class="flex items-center mb-4">
+                <span
+                  class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold mr-3"
+                  >POST</span
+                >
+                <h4 class="text-xl font-semibold section-title">
+                  Submit Research Job
+                </h4>
+              </div>
+
+              <p class="text-slate-600 mb-4">
+                Initiates a new document analysis job. Provide your research
+                query and a list of pre-signed URLs to your documents.
+              </p>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">Endpoint:</h5>
+                <div class="code-block">
+                  POST
+                  https://us-central1-depogenius.cloudfunctions.net/clarisearch-submitJob
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">Request Body:</h5>
+                <div class="code-block">
+                  { "query": "Analyze these documents for evidence of medical
+                  malpractice and timeline of care", "files": [ { "fileName":
+                  "Patient Medical Records.pdf", "downloadUrl":
+                  "https://your-storage.com/files/medical-records.pdf?signature=..."
+                  }, { "fileName": "Expert Report - Dr. Smith.pdf",
+                  "downloadUrl":
+                  "https://your-storage.com/files/expert-report.pdf?signature=..."
+                  } ], "priority": "high", "options": { "betaMode": false,
+                  "processing": { "maxConcurrentFiles": 5, "timeoutMinutes": 120
+                  } }, "metadata": { "caseId": "case-2024-001", "requestedBy":
+                  "attorney@lawfirm.com" } }
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">
+                  Required Fields:
+                </h5>
+                <ul class="list-disc list-inside text-slate-600 space-y-1">
+                  <li>
+                    <strong>query:</strong> Your research question or analysis
+                    request
+                  </li>
+                  <li>
+                    <strong>files:</strong> Array of file objects with fileName
+                    and downloadUrl
+                  </li>
+                  <li>
+                    <strong>files[].downloadUrl:</strong> Pre-signed GET URL
+                    that expires no sooner than 4 hours
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">
+                  Success Response (202 Accepted):
+                </h5>
+                <div class="code-block">
+                  { "jobId": "clarisearch-job-abc123", "status": "queued",
+                  "statusUrl":
+                  "https://us-central1-depogenius.cloudfunctions.net/clarisearch-getJobStatus?jobId=clarisearch-job-abc123",
+                  "queuePosition": 2 }
+                </div>
+              </div>
+
+              <div>
+                <h5 class="font-semibold text-slate-800 mb-2">
+                  Error Responses:
+                </h5>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span class="text-red-600 font-semibold"
+                      >401 Unauthorized:</span
+                    >
+                    <div class="code-block mt-1">
+                      {"error": "Invalid or missing API key"}
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-red-600 font-semibold"
+                      >400 Bad Request:</span
+                    >
+                    <div class="code-block mt-1">
+                      {"error": "Missing required field: query"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Get Job Status Endpoint -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <div class="flex items-center mb-4">
+                <span
+                  class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mr-3"
+                  >GET</span
+                >
+                <h4 class="text-xl font-semibold section-title">
+                  Get Job Status
+                </h4>
+              </div>
+
+              <p class="text-slate-600 mb-4">
+                Retrieve the current status and progress of a submitted job.
+                Supports efficient polling with ETag caching to minimize
+                unnecessary requests.
+              </p>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">Endpoint:</h5>
+                <div class="code-block">
+                  GET
+                  https://us-central1-depogenius.cloudfunctions.net/clarisearch-getJobStatus?jobId={jobId}
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">
+                  Headers (Recommended for Efficiency):
+                </h5>
+                <div class="code-block">
+                  If-None-Match: "previous-etag-value"
+                </div>
+                <p class="text-sm text-slate-500 mt-2">
+                  Include the ETag from your previous response to receive a 304
+                  Not Modified when the job status hasn't changed, saving
+                  bandwidth and processing time.
+                </p>
+              </div>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">
+                  Success Response (200 OK):
+                </h5>
+                <div class="code-block">
+                  { "jobId": "clarisearch-job-abc123", "status": "analyzing",
+                  "query": "Analyze these documents for evidence of medical
+                  malpractice...", "fileCount": 5, "progress": { "totalFiles":
+                  5, "completedFiles": 2, "failedFiles": 0, "processingFiles":
+                  1, "queuedFiles": 2, "currentlyProcessingFiles": [ {
+                  "fileName": "Expert Report - Dr. Smith.pdf", "startedAt":
+                  "2024-01-15T10:30:00Z" } ], "estimatedCompletionAt":
+                  "2024-01-15T11:15:00Z" }, "createdAt": "2024-01-15T10:00:00Z",
+                  "startedAt": "2024-01-15T10:05:00Z", "completedAt": null,
+                  "updatedAt": "2024-01-15T10:30:00Z", "resultsUrl": null,
+                  "resultsSummary": null, "nextRecommendedPollInSeconds": 15 }
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">
+                  Completed Job Response:
+                </h5>
+                <div class="code-block">
+                  { "jobId": "clarisearch-job-abc123", "status": "completed",
+                  "query": "Analyze these documents for evidence of medical
+                  malpractice...", "fileCount": 5, "progress": { "totalFiles":
+                  5, "completedFiles": 4, "failedFiles": 1, "processingFiles":
+                  0, "queuedFiles": 0, "currentlyProcessingFiles": [] },
+                  "createdAt": "2024-01-15T10:00:00Z", "startedAt":
+                  "2024-01-15T10:05:00Z", "completedAt": "2024-01-15T11:00:00Z",
+                  "updatedAt": "2024-01-15T11:00:00Z", "resultsUrl":
+                  "https://storage.googleapis.com/clarisearch-results/clarisearch-job-abc123/evidence-packet.json?signature=...",
+                  "resultsSummary": { "totalEvidence": 156,
+                  "processingTimeSeconds": 1800, "tokensUsed": 45000 } }
+                </div>
+              </div>
+
+              <div>
+                <h5 class="font-semibold text-slate-800 mb-2">
+                  Job Status Values:
+                </h5>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div class="bg-slate-50 p-3 rounded">
+                    <span class="font-semibold text-slate-700">queued:</span>
+                    <p class="text-slate-600 mt-1">
+                      Job accepted, waiting to start
+                    </p>
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded">
+                    <span class="font-semibold text-slate-700"
+                      >preprocessing:</span
+                    >
+                    <p class="text-slate-600 mt-1">
+                      Files being downloaded and prepared
+                    </p>
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded">
+                    <span class="font-semibold text-slate-700">analyzing:</span>
+                    <p class="text-slate-600 mt-1">AI analysis in progress</p>
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded">
+                    <span class="font-semibold text-slate-700">completed:</span>
+                    <p class="text-slate-600 mt-1">
+                      Evidence Packet ready for download
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Polling Best Practices -->
+          <div class="max-w-5xl mx-auto mb-16">
+            <h3 class="text-2xl font-bold section-title mb-6">
+              Polling Best Practices
+            </h3>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                Efficient Status Monitoring
+              </h4>
+
+              <div class="space-y-6">
+                <div>
+                  <h5 class="font-semibold text-slate-800 mb-2">
+                    1. Use ETags for Efficient Polling
+                  </h5>
+                  <p class="text-slate-600 mb-3">
+                    Always include the <code>If-None-Match</code> header with
+                    the ETag from your previous response. This allows the server
+                    to return a 304 Not Modified when nothing has changed.
+                  </p>
+                  <div class="code-block">
+                    // Example: Efficient polling with ETags let etag = null;
+                    async function checkJobStatus(jobId) { const headers = {
+                    'Authorization': 'Bearer ' + apiKey }; if (etag) {
+                    headers['If-None-Match'] = etag; } const response = await
+                    fetch(statusUrl, { headers }); if (response.status === 304)
+                    { // Job hasn't changed, use cached data return
+                    previousJobData; } if (response.status === 200) { etag =
+                    response.headers.get('ETag'); return await response.json();
+                    } }
+                  </div>
+                </div>
+
+                <div>
+                  <h5 class="font-semibold text-slate-800 mb-2">
+                    2. Follow Adaptive Polling Intervals
+                  </h5>
+                  <p class="text-slate-600 mb-3">
+                    Use the <code>nextRecommendedPollInSeconds</code> value from
+                    the API response to optimize your polling frequency and
+                    avoid unnecessary requests.
+                  </p>
+                  <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-slate-50 p-3 rounded">
+                      <span class="font-semibold text-slate-700"
+                        >Active Processing:</span
+                      >
+                      <p class="text-slate-600 mt-1">3-30 seconds</p>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded">
+                      <span class="font-semibold text-slate-700">Queued:</span>
+                      <p class="text-slate-600 mt-1">60-600 seconds</p>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded">
+                      <span class="font-semibold text-slate-700"
+                        >Terminal States:</span
+                      >
+                      <p class="text-slate-600 mt-1">Stop polling</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h5 class="font-semibold text-slate-800 mb-2">
+                    3. Handle Rate Limits Gracefully
+                  </h5>
+                  <p class="text-slate-600 mb-3">
+                    If you receive a 429 Too Many Requests response, check the
+                    <code>Retry-After</code>
+                    header and wait the specified number of seconds before
+                    retrying.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error Handling -->
+          <div class="max-w-5xl mx-auto mb-16">
+            <h3 class="text-2xl font-bold section-title mb-6">
+              Error Handling
+            </h3>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                Common Error Scenarios
+              </h4>
+
+              <div class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 class="font-semibold text-red-600 mb-2">
+                      Authentication Errors
+                    </h5>
+                    <div class="code-block text-sm">
+                      // 401 Unauthorized { "error": "Invalid or missing API
+                      key" } // Common causes: // - Missing Authorization header
+                      // - Invalid API key format // - Expired or revoked API
+                      key
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 class="font-semibold text-red-600 mb-2">
+                      Validation Errors
+                    </h5>
+                    <div class="code-block text-sm">
+                      // 400 Bad Request { "error": "Bad Request: Missing
+                      'query' or 'files'." } // Common causes: // - Missing
+                      required fields // - Invalid file URLs // - Malformed
+                      request body
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h5 class="font-semibold text-slate-800 mb-2">
+                    Handling File-Level Failures
+                  </h5>
+                  <p class="text-slate-600 mb-3">
+                    Individual file failures don't cause the entire job to fail.
+                    Check the
+                    <code>progress.failedFiles</code> count and
+                    <code>errors</code> array in the job status response for
+                    details.
+                  </p>
+                  <div class="code-block">
+                    // Job with partial failures { "status": "completed",
+                    "progress": { "totalFiles": 5, "completedFiles": 4,
+                    "failedFiles": 1 }, "errors": [ { "fileId": "file-abc123",
+                    "fileName": "corrupted-document.pdf", "error": "Unable to
+                    parse PDF: File appears to be corrupted", "timestamp":
+                    "2024-01-15T10:45:00Z" } ] }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Code Examples -->
+          <div class="max-w-5xl mx-auto">
+            <h3 class="text-2xl font-bold section-title mb-6">
+              Complete Integration Example
+            </h3>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                End-to-End JavaScript Example
+              </h4>
+
+              <div class="code-block">
+                async function processDocuments(apiKey, query, files) { const
+                baseUrl =
+                'https://us-central1-depogenius.cloudfunctions.net/clarisearch-';
+                // Step 1: Submit the job const submitResponse = await
+                fetch(baseUrl + 'submitJob', { method: 'POST', headers: {
+                'Authorization': 'Bearer ' + apiKey, 'Content-Type':
+                'application/json' }, body: JSON.stringify({ query: query,
+                files: files, metadata: { requestId: Date.now().toString() } })
+                }); if (!submitResponse.ok) { throw new Error(`Failed to submit
+                job: ${submitResponse.statusText}`); } const { jobId, statusUrl
+                } = await submitResponse.json(); console.log(`Job submitted
+                successfully: ${jobId}`); // Step 2: Poll for completion let
+                etag = null; let job = null; while (true) { const headers = {
+                'Authorization': 'Bearer ' + apiKey }; if (etag)
+                headers['If-None-Match'] = etag; const statusResponse = await
+                fetch(statusUrl, { headers }); if (statusResponse.status ===
+                304) { // No changes, wait and retry await
+                sleep(job?.nextRecommendedPollInSeconds || 30); continue; } if
+                (!statusResponse.ok) { throw new Error(`Failed to get job
+                status: ${statusResponse.statusText}`); } etag =
+                statusResponse.headers.get('ETag'); job = await
+                statusResponse.json(); console.log(`Job status: ${job.status}
+                (${job.progress.completedFiles}/${job.progress.totalFiles}
+                files)`); // Check if job is complete if (job.status ===
+                'completed') { console.log(`Job completed! Evidence Packet:
+                ${job.resultsUrl}`); return job; } else if (job.status ===
+                'failed') { throw new Error(`Job failed:
+                ${job.error?.message}`); } // Wait before next poll await
+                sleep(job.nextRecommendedPollInSeconds || 30); } } function
+                sleep(seconds) { return new Promise(resolve =>
+                setTimeout(resolve, seconds * 1000)); } // Usage example const
+                files = [ { fileName: "contract.pdf", downloadUrl:
+                "https://your-storage.com/contract.pdf?signature=..." }, {
+                fileName: "correspondence.pdf", downloadUrl:
+                "https://your-storage.com/correspondence.pdf?signature=..." } ];
+                processDocuments( 'csk_your_api_key_here', 'Analyze these
+                documents for evidence of breach of contract', files ).then(job
+                => { console.log('Processing complete!', job.resultsSummary);
+                }).catch(error => { console.error('Error processing documents:',
+                error); });
+              </div>
+            </div>
           </div>
         </div>
       </section>
