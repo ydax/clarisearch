@@ -746,9 +746,61 @@
               </p>
             </div>
 
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                2. Secure Your Files (Critical)
+              </h4>
+              <p class="text-slate-600 mb-4">
+                <strong>Clarisearch™ uses a zero-trust security model.</strong>
+                Your files remain in your own secure storage, and you provide
+                temporary pre-signed URLs for access. We never request permanent
+                credentials or ask you to make files public.
+              </p>
+
+              <div class="bg-blue-50 border border-blue-200 rounded p-4 mb-4">
+                <h5 class="font-semibold text-blue-800 mb-2">
+                  ✅ Secure Approach: Pre-Signed URLs
+                </h5>
+                <ul class="text-sm text-blue-700 space-y-1">
+                  <li>• Files remain private in your storage system</li>
+                  <li>• URLs are time-limited (4+ hours recommended)</li>
+                  <li>• Each URL grants access to exactly one file</li>
+                  <li>• Complete audit trail and control</li>
+                </ul>
+              </div>
+
+              <div class="bg-red-50 border border-red-200 rounded p-4 mb-4">
+                <h5 class="font-semibold text-red-800 mb-2">
+                  ❌ Never Do This:
+                </h5>
+                <ul class="text-sm text-red-700 space-y-1">
+                  <li>• Don't make files publicly accessible</li>
+                  <li>• Don't share permanent storage credentials</li>
+                  <li>• Don't use URLs that expire too quickly</li>
+                </ul>
+              </div>
+
+              <p class="text-sm text-slate-600">
+                <strong>Quick Example (Google Cloud Storage):</strong>
+              </p>
+              <div class="code-block text-xs">
+                // Generate secure, time-limited URL const [signedUrl] = await
+                storage .bucket('your-private-bucket')
+                .file('sensitive-document.pdf') .getSignedUrl({ version: 'v4',
+                action: 'read', expires: Date.now() + 6 * 60 * 60 * 1000 // 6
+                hours }); // Use in API call const files = [{ fileName:
+                'sensitive-document.pdf', downloadUrl: signedUrl // ✅ Secure,
+                time-limited }];
+              </div>
+              <p class="text-xs text-slate-500 mt-2">
+                See the complete security guide with examples for all major
+                cloud providers below.
+              </p>
+            </div>
+
             <div class="bg-white rounded-lg shadow-md p-6">
               <h4 class="text-xl font-semibold section-title mb-4">
-                2. Base URL
+                3. Base URL
               </h4>
               <p class="text-slate-600 mb-2">
                 All API requests should be made to:
@@ -1152,6 +1204,247 @@
                     parse PDF: File appears to be corrupted", "timestamp":
                     "2024-01-15T10:45:00Z" } ] }
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Secure File Access Guide -->
+          <div class="max-w-5xl mx-auto mb-16">
+            <h3 class="text-2xl font-bold section-title mb-6">
+              Secure File Access Guide
+            </h3>
+
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                Zero-Trust Security Model
+              </h4>
+              <p class="text-slate-600 mb-4">
+                Clarisearch™ implements a
+                <strong>zero-trust security model</strong>. We never request
+                permanent access to your storage systems or ask you to make
+                files publicly accessible. Your sensitive documents remain in
+                your control at all times.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-green-50 border border-green-200 rounded p-4">
+                  <h5 class="font-semibold text-green-800 mb-3">
+                    ✅ How It Works
+                  </h5>
+                  <ul class="text-sm text-green-700 space-y-2">
+                    <li>1. You generate temporary, pre-signed URLs</li>
+                    <li>2. URLs grant access to specific files only</li>
+                    <li>3. URLs automatically expire (4+ hours recommended)</li>
+                    <li>4. Clarisearch downloads and processes files</li>
+                    <li>5. Original files remain in your private storage</li>
+                    <li>6. You maintain complete audit trail</li>
+                  </ul>
+                </div>
+                <div class="bg-blue-50 border border-blue-200 rounded p-4">
+                  <h5 class="font-semibold text-blue-800 mb-3">
+                    🔒 Security Benefits
+                  </h5>
+                  <ul class="text-sm text-blue-700 space-y-2">
+                    <li>• No permanent credential sharing</li>
+                    <li>• Time-limited access automatically expires</li>
+                    <li>• File-specific permissions (no bucket access)</li>
+                    <li>• SOC 2, HIPAA, GDPR compliant</li>
+                    <li>• Complete data custody retention</li>
+                    <li>• Zero data retention by Clarisearch</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                Implementation by Cloud Provider
+              </h4>
+
+              <div class="space-y-8">
+                <!-- Google Cloud Storage -->
+                <div>
+                  <h5 class="text-lg font-semibold text-slate-800 mb-3">
+                    Google Cloud Storage (Recommended)
+                  </h5>
+                  <div class="code-block">
+                    const { Storage } = require('@google-cloud/storage'); const
+                    storage = new Storage({ projectId: 'your-project-id',
+                    keyFilename: 'service-account-key.json' }); async function
+                    generateSecureUrls(files) { const secureFiles = []; for
+                    (const file of files) { const [signedUrl] = await storage
+                    .bucket('your-private-bucket') .file(file.path)
+                    .getSignedUrl({ version: 'v4', action: 'read', expires:
+                    Date.now() + 6 * 60 * 60 * 1000, // 6 hours });
+                    secureFiles.push({ fileName: file.name, downloadUrl:
+                    signedUrl }); } return secureFiles; }
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded mt-3">
+                    <p class="text-sm font-semibold text-slate-700">
+                      Required IAM Permission:
+                    </p>
+                    <p class="text-xs text-slate-600 mt-1">
+                      Grant your service account:
+                      <code>roles/storage.objectViewer</code>
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Amazon S3 -->
+                <div>
+                  <h5 class="text-lg font-semibold text-slate-800 mb-3">
+                    Amazon S3
+                  </h5>
+                  <div class="code-block">
+                    const AWS = require('aws-sdk'); const s3 = new AWS.S3({
+                    accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey:
+                    process.env.AWS_SECRET_ACCESS_KEY, region: 'your-region' });
+                    async function generateSecureUrls(files) { const secureFiles
+                    = []; for (const file of files) { const signedUrl =
+                    s3.getSignedUrl('getObject', { Bucket:
+                    'your-private-bucket', Key: file.key, Expires: 6 * 60 * 60,
+                    // 6 hours (in seconds) }); secureFiles.push({ fileName:
+                    file.name, downloadUrl: signedUrl }); } return secureFiles;
+                    }
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded mt-3">
+                    <p class="text-sm font-semibold text-slate-700">
+                      Required S3 Permission:
+                    </p>
+                    <p class="text-xs text-slate-600 mt-1">
+                      IAM policy with <code>s3:GetObject</code> on specific
+                      paths
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Microsoft Azure -->
+                <div>
+                  <h5 class="text-lg font-semibold text-slate-800 mb-3">
+                    Microsoft Azure Blob Storage
+                  </h5>
+                  <div class="code-block">
+                    const { BlobServiceClient, StorageSharedKeyCredential,
+                    generateBlobSASQueryParameters, BlobSASPermissions } =
+                    require('@azure/storage-blob'); const accountName =
+                    'your-storage-account'; const credential = new
+                    StorageSharedKeyCredential( accountName,
+                    process.env.AZURE_STORAGE_ACCOUNT_KEY ); const
+                    blobServiceClient = new BlobServiceClient(
+                    `https://${accountName}.blob.core.windows.net`, credential
+                    ); async function generateSecureUrls(files) { const
+                    secureFiles = []; for (const file of files) { const
+                    containerClient = blobServiceClient
+                    .getContainerClient('your-private-container'); const
+                    blobClient = containerClient.getBlobClient(file.path); const
+                    sasToken = generateBlobSASQueryParameters({ containerName:
+                    'your-private-container', blobName: file.path, permissions:
+                    BlobSASPermissions.parse('r'), // Read only expiresOn: new
+                    Date(Date.now() + 6 * 60 * 60 * 1000), // 6 hours },
+                    credential).toString(); secureFiles.push({ fileName:
+                    file.name, downloadUrl: `${blobClient.url}?${sasToken}` });
+                    } return secureFiles; }
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                Security Best Practices
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h5 class="font-semibold text-slate-800 mb-3">✅ Do This</h5>
+                  <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex items-start">
+                      <span class="text-green-500 mr-2">•</span>
+                      <div>
+                        <strong>Use 4+ hour expiration:</strong> Ensures URLs
+                        don't expire during processing
+                      </div>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-green-500 mr-2">•</span>
+                      <div>
+                        <strong>Validate file sizes:</strong> Check against
+                        500MB per file limit
+                      </div>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-green-500 mr-2">•</span>
+                      <div>
+                        <strong>Use dedicated directories:</strong> Create
+                        "clarisearch/" subdirectories for organization
+                      </div>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-green-500 mr-2">•</span>
+                      <div>
+                        <strong>Implement least privilege:</strong> Grant only
+                        necessary read permissions
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="font-semibold text-slate-800 mb-3">
+                    ❌ Avoid This
+                  </h5>
+                  <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex items-start">
+                      <span class="text-red-500 mr-2">•</span>
+                      <div>
+                        <strong>Public file URLs:</strong> Never make sensitive
+                        files publicly accessible
+                      </div>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-red-500 mr-2">•</span>
+                      <div>
+                        <strong>Short expiration times:</strong> URLs expiring
+                        in <30 minutes may fail
+                      </div>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-red-500 mr-2">•</span>
+                      <div>
+                        <strong>Permanent credentials:</strong> Never share
+                        storage access keys
+                      </div>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-red-500 mr-2">•</span>
+                      <div>
+                        <strong>Overly broad permissions:</strong> Avoid
+                        admin/full bucket access
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div
+                class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded"
+              >
+                <h5 class="font-semibold text-yellow-800 mb-2">
+                  ⚠️ Common Troubleshooting
+                </h5>
+                <div class="text-sm text-yellow-700 space-y-2">
+                  <p>
+                    <strong>"Status 403" Error:</strong> Check URL expiration
+                    and service account permissions
+                  </p>
+                  <p>
+                    <strong>"Status 404" Error:</strong> Verify file exists and
+                    path is correct
+                  </p>
+                  <p>
+                    <strong>Processing Failures:</strong> Ensure URLs have 4+
+                    hours before expiration
+                  </p>
                 </div>
               </div>
             </div>
