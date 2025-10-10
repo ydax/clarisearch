@@ -889,13 +889,16 @@
                   { "query": "Analyze these documents for evidence of medical
                   malpractice and timeline of care", "files": [ { "fileName":
                   "Patient Medical Records.pdf", "downloadUrl":
-                  "https://your-storage.com/files/medical-records.pdf?signature=..."
-                  }, { "fileName": "Expert Report - Dr. Smith.pdf",
-                  "downloadUrl":
-                  "https://your-storage.com/files/expert-report.pdf?signature=..."
-                  } ], "priority": "high", "options": { "betaMode": false,
-                  "processing": { "maxConcurrentFiles": 5, "timeoutMinutes": 120
-                  } }, "metadata": { "caseId": "case-2024-001", "requestedBy":
+                  "https://your-storage.com/files/medical-records.pdf?signature=...",
+                  "clientReference": "your-system:file:abc123:CaseFile",
+                  "file_title": "Patient Medical Records.pdf" }, { "fileName":
+                  "Expert Report - Dr. Smith.pdf", "downloadUrl":
+                  "https://your-storage.com/files/expert-report.pdf?signature=...",
+                  "clientReference": "your-system:file:def456:ExpertReport",
+                  "file_title": "Expert Report - Dr. Smith.pdf" } ], "priority":
+                  "high", "options": { "betaMode": false, "processing": {
+                  "maxConcurrentFiles": 5, "timeoutMinutes": 120 } },
+                  "metadata": { "caseId": "case-2024-001", "requestedBy":
                   "attorney@lawfirm.com" } }
                 </div>
               </div>
@@ -914,8 +917,36 @@
                     and downloadUrl
                   </li>
                   <li>
+                    <strong>files[].fileName:</strong> The name of the file for
+                    display purposes
+                  </li>
+                  <li>
                     <strong>files[].downloadUrl:</strong> Pre-signed GET URL
                     that expires no sooner than 4 hours
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-2">
+                  Optional File Fields:
+                </h5>
+                <ul class="list-disc list-inside text-slate-600 space-y-1">
+                  <li>
+                    <strong>files[].clientReference:</strong> An opaque
+                    identifier that Clarisearch passes through unchanged. Use
+                    this to map evidence back to your source system. Format is
+                    client-specific but should be parseable. Example:
+                    "your-system:file:abc123:CaseFile"
+                  </li>
+                  <li>
+                    <strong>files[].file_title:</strong> A user-friendly display
+                    title for the file. If not provided, fileName will be used.
+                    This appears in the evidence packet for each evidence item.
+                  </li>
+                  <li>
+                    <strong>files[].options:</strong> File-specific processing
+                    options (see API documentation for details)
                   </li>
                 </ul>
               </div>
@@ -1447,6 +1478,144 @@
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- DepoGenius Integration -->
+          <div class="max-w-5xl mx-auto mb-16">
+            <h3 class="text-2xl font-bold section-title mb-6">
+              DepoGenius Integration
+            </h3>
+
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                Enhanced Client Reference Format
+              </h4>
+              <p class="text-slate-600 mb-4">
+                When integrating Clarisearch with DepoGenius, the system uses an
+                enhanced
+                <code>clientReference</code> format that enables automatic
+                evidence linking and transformation. This format includes
+                additional metadata to support the front-end evidence navigation
+                system.
+              </p>
+
+              <div class="bg-blue-50 border border-blue-200 rounded p-4 mb-4">
+                <h5 class="font-semibold text-blue-800 mb-3">
+                  Format Specifications
+                </h5>
+                <div class="space-y-3 text-sm">
+                  <div>
+                    <p class="font-semibold text-blue-800">For Files:</p>
+                    <code class="text-blue-700"
+                      >depogenius:file:FILE_ID:sourceType</code
+                    >
+                    <p class="text-blue-600 mt-1">
+                      Example: <code>depogenius:file:abc123xyz:CaseFile</code>
+                    </p>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-blue-800">For Depositions:</p>
+                    <code class="text-blue-700">depogenius:depo:DEPO_ID</code>
+                    <p class="text-blue-600 mt-1">
+                      Example: <code>depogenius:depo:xyz789abc</code>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <h5 class="font-semibold text-slate-800 mb-3">
+                  Source Type Values
+                </h5>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                  <div class="bg-slate-50 p-3 rounded">
+                    <code class="font-semibold text-slate-700">CaseFile</code>
+                    <p class="text-slate-600 mt-1">General case documents</p>
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded">
+                    <code class="font-semibold text-slate-700"
+                      >DepositionExhibit</code
+                    >
+                    <p class="text-slate-600 mt-1">
+                      Exhibits linked to depositions
+                    </p>
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded">
+                    <code class="font-semibold text-slate-700"
+                      >DepositionTranscript</code
+                    >
+                    <p class="text-slate-600 mt-1">
+                      Deposition transcripts (use 'depo' prefix)
+                    </p>
+                  </div>
+                  <div class="bg-slate-50 p-3 rounded">
+                    <code class="font-semibold text-slate-700">Attachment</code>
+                    <p class="text-slate-600 mt-1">
+                      Additional file attachments
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-green-50 border border-green-200 rounded p-4">
+                <h5 class="font-semibold text-green-800 mb-2">
+                  Automatic Evidence Transformation
+                </h5>
+                <p class="text-sm text-green-700">
+                  When evidence packets are retrieved from Clarisearch, the
+                  DepoGenius system automatically transforms the evidence
+                  structure:
+                </p>
+                <ul class="text-sm text-green-700 mt-2 space-y-1 ml-4">
+                  <li>
+                    • Parses <code>clientReference</code> to extract DepoGenius
+                    IDs and source types
+                  </li>
+                  <li>
+                    • Replaces Clarisearch internal <code>file_id</code> with
+                    DepoGenius <code>file_id</code>
+                  </li>
+                  <li>
+                    • Maps source types to <code>file_caseSource</code> values
+                    (e.g., "CaseFile" → "case_file")
+                  </li>
+                  <li>
+                    • Preserves <code>file_title</code> for user-friendly
+                    display
+                  </li>
+                  <li>
+                    • Maintains <code>client_reference</code> for debugging and
+                    audit purposes
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h4 class="text-xl font-semibold section-title mb-4">
+                Evidence Packet Structure (Post-Transformation)
+              </h4>
+              <p class="text-slate-600 mb-4">
+                After transformation, evidence items in the packet have the
+                following key fields for DepoGenius integration:
+              </p>
+              <div class="code-block">
+                { "evidence_id": "evidence-workflowId-1", "file_id":
+                "abc123xyz", // DepoGenius file ID (transformed)
+                "file_caseSource": "case_file", // Mapped from sourceType
+                "file_title": "Contract Agreement.pdf", // From original
+                fileName "client_reference":
+                "depogenius:file:abc123xyz:CaseFile", // Preserved for debugging
+                "snippet": "The parties agree to...", "relevance_score": 0.95,
+                "relevance_explanation": "...", // ... other evidence fields }
+              </div>
+              <p class="text-sm text-slate-500 mt-3">
+                <strong>Note:</strong> The transformation happens automatically
+                in the <code>clarisearchJobPoller</code> function when
+                retrieving completed jobs. No additional client-side processing
+                is required.
+              </p>
             </div>
           </div>
 
