@@ -166,6 +166,11 @@
                 >Benefits</a
               >
               <a
+                href="#resources"
+                class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600"
+                >Resources</a
+              >
+              <a
                 href="#api-docs"
                 class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600"
                 >API Docs</a
@@ -295,8 +300,8 @@
                 { "query": "Analyze these documents for evidence of medical
                 malpractice...", "files": [ { "fileName": "Exhibit A - Dr. Smith
                 Notes.pdf", "downloadUrl":
-                "https://client-storage.com/path/to/file1?signature=..." } ],
-                "callbackUrl":
+                "https://client-storage.com/path/to/file1?signature=...",
+                "mimeType": "application/pdf" } ], "callbackUrl":
                 "https://api.your-app.com/webhook/depogenius-results",
                 "metadata": { "internalCaseId": "case-12345" } }
               </div>
@@ -707,6 +712,79 @@
         </div>
       </section>
 
+      <section id="resources" class="py-16 sm:py-24 bg-slate-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold tracking-tight section-title">
+              White Papers & Resources
+            </h2>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-600">
+              Comprehensive documentation on Clarisearch's capabilities,
+              security architecture, and government compliance features.
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h3 class="text-xl font-semibold section-title mb-3">
+                General White Paper
+              </h3>
+              <p class="text-slate-600 mb-4">
+                Comprehensive overview of Clarisearch's proprietary pipeline
+                technology, evidence-linking architecture, and practical
+                applications in legal document analysis.
+              </p>
+              <ul class="text-sm text-slate-600 space-y-2 mb-4">
+                <li>• Fixed-cost processing at scale</li>
+                <li>• Evidence Packet structure and benefits</li>
+                <li>• Integration examples and use cases</li>
+                <li>• Technical architecture overview</li>
+              </ul>
+              <a
+                href="https://docs.google.com/document/d/1LPiP-813ELSBMoBGk5-uJMnwH0jybbOEF6a8CU-989Q/edit?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors"
+                >Read White Paper</a
+              >
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h3 class="text-xl font-semibold section-title mb-3">
+                Government & Court Security Guide
+              </h3>
+              <p class="text-slate-600 mb-4">
+                Detailed security documentation designed for government
+                procurement teams and public court systems, covering compliance,
+                data custody, and zero-trust architecture.
+              </p>
+              <ul class="text-sm text-slate-600 space-y-2 mb-4">
+                <li>• Zero-trust security model</li>
+                <li>• Government compliance requirements</li>
+                <li>• Data custody and retention policies</li>
+                <li>• Audit trail and transparency features</li>
+              </ul>
+              <a
+                href="https://docs.google.com/document/d/1nIaLAVIP_zBwg7kH2XPAqKlAS4mjQopJdxlVOc6ThR4/edit?tab=t.0"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors"
+                >Read Security Guide</a
+              >
+            </div>
+          </div>
+          <div class="mt-8 max-w-3xl mx-auto text-center">
+            <p
+              class="text-sm text-slate-500 bg-blue-50 border border-blue-200 rounded p-4"
+            >
+              <strong>For Government Procurement Teams:</strong> Both white
+              papers include detailed information on compliance requirements,
+              cost predictability, and security architecture designed
+              specifically for public sector use cases. Contact our team for
+              RFP-specific documentation and pilot program information.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section id="api-docs" class="py-16 sm:py-24">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-12">
@@ -890,16 +968,17 @@
                   malpractice and timeline of care", "files": [ { "fileName":
                   "Patient Medical Records.pdf", "downloadUrl":
                   "https://your-storage.com/files/medical-records.pdf?signature=...",
-                  "clientReference": "your-system:file:abc123:CaseFile",
-                  "file_title": "Patient Medical Records.pdf" }, { "fileName":
-                  "Expert Report - Dr. Smith.pdf", "downloadUrl":
+                  "mimeType": "application/pdf", "clientReference":
+                  "your-system:file:abc123:CaseFile", "file_title": "Patient
+                  Medical Records.pdf" }, { "fileName": "Expert Report - Dr.
+                  Smith.pdf", "downloadUrl":
                   "https://your-storage.com/files/expert-report.pdf?signature=...",
-                  "clientReference": "your-system:file:def456:ExpertReport",
-                  "file_title": "Expert Report - Dr. Smith.pdf" } ], "priority":
-                  "high", "options": { "betaMode": false, "processing": {
-                  "maxConcurrentFiles": 5, "timeoutMinutes": 120 } },
-                  "metadata": { "caseId": "case-2024-001", "requestedBy":
-                  "attorney@lawfirm.com" } }
+                  "mimeType": "application/pdf", "clientReference":
+                  "your-system:file:def456:ExpertReport", "file_title": "Expert
+                  Report - Dr. Smith.pdf" } ], "priority": "high", "options": {
+                  "betaMode": false, "processing": { "maxConcurrentFiles": 5,
+                  "timeoutMinutes": 120 } }, "metadata": { "caseId":
+                  "case-2024-001", "requestedBy": "attorney@lawfirm.com" } }
                 </div>
               </div>
 
@@ -913,8 +992,8 @@
                     request
                   </li>
                   <li>
-                    <strong>files:</strong> Array of file objects with fileName
-                    and downloadUrl
+                    <strong>files:</strong> Array of file objects with fileName,
+                    downloadUrl, and mimeType
                   </li>
                   <li>
                     <strong>files[].fileName:</strong> The name of the file for
@@ -923,6 +1002,11 @@
                   <li>
                     <strong>files[].downloadUrl:</strong> Pre-signed GET URL
                     that expires no sooner than 4 hours
+                  </li>
+                  <li>
+                    <strong>files[].mimeType:</strong> MIME type of the file
+                    (e.g., 'application/pdf', 'text/plain', 'image/jpeg').
+                    Required to ensure proper file processing and routing.
                   </li>
                 </ul>
               </div>
